@@ -1,0 +1,39 @@
+/* Studios List */
+.studios-list {
+    position: relative; /* Set position relative */
+}
+
+/* Studio Card */
+.studio-card {
+    position: absolute; /* Set position absolute */
+    top: 0; /* Position cards at the top */
+    left: 0; /* Position cards at the left */
+    width: calc(25% - 20px); /* Set width for each card */
+    margin-right: 20px; /* Add margin between cards */
+    margin-bottom: 20px; /* Add margin between cards */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.studio-card img {
+    width: 100%;
+    height: 150px; /* Set fixed height for all images */
+    object-fit: cover;
+}
+
+.studio-card .card-body {
+    padding: 15px;
+}
+
+.studio-card .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.studio-card .card-text {
+    font-size: 16px;
+    color: #555;
+}

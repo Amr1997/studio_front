@@ -1,0 +1,24 @@
+/* Styles for Reservation page */
+
+.reservation-container {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.slider-container {
+    margin-bottom: 20px;
+}
+
+.slick-slide img {
+    max-width: 50%; 
+    height: 25rem; 
+    max-height: 100px; 
+}
+
+.studio-info {
+    margin-bottom: 20px;
+}
+
+.submit-button {
+    margin-top: 20px;
+}

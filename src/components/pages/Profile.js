@@ -1,32 +1,47 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Container, Row, Col } from 'react-bootstrap';
 import axiosInstance from '../api/axio';
+import ErrorHandler from '../error-handler/ErrorHandler';
+import StudiosList from '../studios/StudioList';
+import '../../style/profile.css'
 const Profile = () => {
     const user = useSelector(state => state.auth.user);
+    const [studios, setStudios] = useState([]);
 
-    const handleGetStudios = () => {
-        axiosInstance.get('api/studios/')
-        .then(response => {
-            console.log(response.data);
-        })
-        .catch(error => {
-            if (error.response && error.response.data && error.response.data.code === "token_not_valid") {
-                // Token is invalid or expired, handle the error accordingly
-                console.error('Access token is invalid or expired. Redirecting to login page...');
-                // Redirect the user to the login page or refresh the token
-            } else {
+    useEffect(() => {
+        fetchStudios();
+    }, []);
+
+    const fetchStudios = () => {
+        axiosInstance.get('api/studios/', { params: { owner_profile: 'false' } })
+            .then(response => {
+                setStudios(response.data);
+            })
+            .catch(error => {
                 console.error('Error fetching studios:', error);
-            }
-        });
+            });
     }
+
     return (
-        <div>
-            <h1>Welcome {user.name}!</h1>
-            <p>Email: {user.email}</p>
-            <p>Role: {user.role}</p>
-            <button onClick={handleGetStudios}>Get Studios</button>
-        </div>
+        <Container className="profile-container">
+            <Row>
+                <Col md={8}>
+                    <div className="user-info">
+                        <h1>Welcome, {user.name}!</h1>
+                        <p>Email: {user.email}</p>
+                    </div>
+                </Col>
+                
+            </Row>
+           
+                    <div className="studios-list">
+                        <h2>Your Studios</h2>
+                        <StudiosList studios={studios} />
+                    </div>
+              
+        </Container>
     );
 };
 
-export default Profile;
+export default ErrorHandler(Profile, axiosInstance);

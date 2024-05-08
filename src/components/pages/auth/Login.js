@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { login } from '../../../redux/authActions';
+import { useDispatch , connect, useSelector} from 'react-redux';
+import { bindActionCreators } from "redux";
+import { logOut , userLogin } from '../../../global-state/actions/authActions';
 import { useNavigate } from 'react-router-dom'; 
 
 function Login() { 
@@ -16,8 +17,8 @@ function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
     console.log(credentials);
-    dispatch(login(credentials));
-    navigate('/profile');
+    dispatch(userLogin(credentials , navigate));
+    // navigate('/profile');
   };
 
   return (
@@ -42,7 +43,6 @@ function Login() {
                     Login
                   </Button>
                 </Form>
-                <hr className="my-4" />
               </Card.Body>
             </Card>
           </Col>
@@ -52,4 +52,8 @@ function Login() {
   );
 }
 
-export default Login; 
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ userLogin, logOut }, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(Login);
