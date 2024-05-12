@@ -5,7 +5,7 @@ import axiosInstance from '../api/axio';
 import ErrorHandler from '../error-handler/ErrorHandler';
 import StudiosList from '../studios/StudioList';
 import '../../style/profile.css'
-const Profile = () => {
+const Dashborad = () => {
     const user = useSelector(state => state.auth.user);
     const [studios, setStudios] = useState([]);
 
@@ -14,7 +14,8 @@ const Profile = () => {
     }, []);
 
     const fetchStudios = () => {
-        axiosInstance.get('api/studios/', { params: { owner_profile: 'true' } })
+        const ownerProfile = user.user_type === 'studio_owner' ? 'true' : 'false';
+        axiosInstance.get('api/studios/', { params: { owner_profile: ownerProfile } })
             .then(response => {
                 setStudios(response.data);
             })
@@ -28,8 +29,7 @@ const Profile = () => {
             <Row>
                 <Col md={8}>
                     <div className="user-info">
-                        <h1>Welcome, {user.name}!</h1>
-                        <p>Email: {user.email}</p>
+                        <h1>Welcome, {user.name}!</h1> 
                     </div>
                 </Col>
                 
@@ -44,4 +44,4 @@ const Profile = () => {
     );
 };
 
-export default ErrorHandler(Profile, axiosInstance);
+export default ErrorHandler(Dashborad, axiosInstance);
